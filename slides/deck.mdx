@@ -1,0 +1,290 @@
+import { themes } from "mdx-deck";
+import { CodeSurfer } from "code-surfer";
+import { nightOwl } from "@code-surfer/themes";
+export const theme = themes.book;
+
+<Footer>
+  <div style={{ margin: "O 10px 0 50px", textAlign: "center" }}>
+    <small>@soub4i</small>
+  </div>
+</Footer>
+
+<div style={{ margin: "0 auto", textAlign: "center" }} >
+
+# Hello
+
+</div>
+
+---
+
+<div style={{ margin: "0 auto", textAlign: "center" }} >
+
+# Who ?
+
+## Abderrahim SOUBAI-ELIDRISI
+
+Fullstack developer | Cloud Architect
+
+</div>
+
+---
+
+<div style={{ margin: "0 auto", textAlign: "center" }} >
+
+# What ?
+
+<img
+  height="393px"
+  src="https://media.giphy.com/media/qgFvTRIySNIC4/source.gif"
+/>
+
+<small>
+  Voice Driven app AKA Voice-activated applications used to be the stuff that
+  <b> science fiction</b> was made of, but not anymore. Today, these applications
+  are readily used on a daily basis by adults and children alike for both business
+  and personal uses.
+</small>
+
+</div>
+
+---
+
+<div style={{ margin: "0 auto", textAlign: "center" }} >
+
+# Look Mom no hands ?
+
+<img
+  style={{ height: "400px" }}
+  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTDSZug4vSt69QontPnaLGgZOedTJQnzjXbdA&usqp=CAU"
+/>
+
+<small>
+  Basiclly we'll create a web app that I can control by my (Ugly) voice.Thanks
+  to the JavaScript Web Speech API specified by W3C makes it easy to add speech
+  recognition to a web page and to create voice driven web applications.
+</small>
+
+</div>
+
+---
+
+<div style={{ margin: "0 auto", textAlign: "center" }} >
+
+# How ?
+
+<small>
+  To make the this easy I will create a simple web page with a video (Let's
+  pretend it's Netflix :D ).
+  I will create a remote control application to control a video player using voice in an HTML page.
+
+</small>
+
+### I will use :
+
+<ul style={{ fontSize: "medium", textAlign: "left" }}>
+  
+<li>
+Snowpack 3: as a bundler and it will handle ssl on our dev environment
+  (google chrome requirement)
+</li>
+<li>
+ Javascript API for speech recognition: W3C
+  browser API to manipulate voice on web pages
+</li>
+<li> HTML/CSS</li>
+
+</ul>
+
+<small>
+*No dependencies needed
+</small>
+</div>
+
+---
+
+<div>
+
+<CodeSurfer theme={nightOwl}>
+
+```html 1
+<video width="400" controls muted>
+  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+  <source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg" />
+  Your browser does not support HTML video.
+</video>
+<script src="index.js"></script>
+```
+
+```html 2
+<video width="400" controls muted>
+  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+  <source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg" />
+  Your browser does not support HTML video.
+</video>
+<script src="index.js"></script>
+```
+
+```html 6
+<video width="400" controls muted>
+  <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4" />
+  <source src="https://www.w3schools.com/html/mov_bbb.ogg" type="video/ogg" />
+  Your browser does not support HTML video.
+</video>
+<script src="index.js"></script>
+```
+
+</CodeSurfer>
+
+</div>
+
+---
+
+<div>
+
+<CodeSurfer theme={nightOwl}>
+
+```js 2,3,4,5
+const video = document.querySelector("video");
+const recognition = new webkitSpeechRecognition();
+recognition.continuous = true;
+recognition.lang = "en-US";
+recognition.start();
+
+recognition.onresult = (event) => {
+  const { results } = event;
+  const remote = (action) => {
+    switch (action) {
+      case "play":
+        video.play();
+        break;
+      case "pause":
+        video.pause();
+        break;
+      case "stop":
+        video.pause();
+        video.currentTime = 0;
+        break;
+      case "mute":
+        video.muted = true;
+        break;
+      case "unmute":
+        video.muted = false;
+        break;
+    }
+  };
+  for (let index = event.resultIndex; index < results.length; index++) {
+    const element = results[index];
+    if (element.isFinal) {
+      const action = element[0].transcript.trim();
+      console.log(`You said: ${action}`);
+      remote(action);
+    }
+  }
+};
+```
+
+```js 7
+const video = document.querySelector("video")
+const recognition =  new webkitSpeechRecognition();
+recognition.continuous = true;
+recognition.lang = 'en-US';
+recognition.start();
+
+recognition.onresult = (event) => {
+    const { results } = event;
+    const remote = (action) => {
+        switch(action){
+            case "play": video.play(); break;
+            case "pause": video.pause(); break;
+            case "stop": video.pause(); video.currentTime = 0; break;
+            case "mute": video.muted = true; break;
+            case "unmute": video.muted = false; break;
+        }
+    }
+    for (let index = event.resultIndex; index < results.length; index++) {
+        const element = results[index];
+        if(element.isFinal){
+            const action = element[0].transcript.trim()
+            console.log(`You said: ${action}`)
+            remote(action)
+        }
+    }
+} src="index.js"></script>
+```
+
+```js 18,19,20,21,22,23,24
+const video = document.querySelector("video")
+const recognition =  new webkitSpeechRecognition();
+recognition.continuous = true;
+recognition.lang = 'en-US';
+recognition.start();
+
+recognition.onresult = (event) => {
+    const { results } = event;
+    const remote = (action) => {
+        switch(action){
+            case "play": video.play(); break;
+            case "pause": video.pause(); break;
+            case "stop": video.pause(); video.currentTime = 0; break;
+            case "mute": video.muted = true; break;
+            case "unmute": video.muted = false; break;
+        }
+    }
+    for (let index = event.resultIndex; index < results.length; index++) {
+        const element = results[index];
+        if(element.isFinal){
+            const action = element[0].transcript.trim()
+            console.log(`You said: ${action}`)
+            remote(action)
+        }
+    }
+} src="index.js"></script>
+```
+
+```js 9,10,11,12,13,14,15,16
+const video = document.querySelector("video")
+const recognition =  new webkitSpeechRecognition();
+recognition.continuous = true;
+recognition.lang = 'en-US';
+recognition.start();
+
+recognition.onresult = (event) => {
+    const { results } = event;
+    const remote = (action) => {
+        switch(action){
+            case "play": video.play(); break;
+            case "pause": video.pause(); break;
+            case "stop": video.pause(); video.currentTime = 0; break;
+            case "mute": video.muted = true; break;
+            case "unmute": video.muted = false; break;
+        }
+    }
+    for (let index = event.resultIndex; index < results.length; index++) {
+        const element = results[index];
+        if(element.isFinal){
+            const action = element[0].transcript.trim()
+            console.log(`You said: ${action}`)
+            remote(action)
+        }
+    }
+} src="index.js"></script>
+```
+
+</CodeSurfer>
+
+ </div>
+
+---
+
+<div style={{ margin: "0 auto", textAlign: "center" }} >
+
+## The End
+
+<p>
+  <small>
+    You can found the code on my github <br />
+    <b>@AbderrahimSoubaiElidrisi/voice-driven-web-app-snowpack</b>
+  </small>
+</p>
+
+</div>
